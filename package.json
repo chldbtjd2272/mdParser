@@ -1,0 +1,23 @@
+{
+  "name": "fd",
+  "version": "1.0.0",
+  "description": "git readme파일 html로 파싱해준다",
+  "main": "app.js",
+  "dependencies": {
+    "showdown": "^1.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit ../Desktop/1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chldbtjd2272/mdParser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chldbtjd2272/mdParser/issues"
+  },
+  "homepage": "https://github.com/chldbtjd2272/mdParser#readme"
+}
