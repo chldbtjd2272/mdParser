@@ -1,3 +1,4 @@
+var proc = require('child_process');
 var fs = require('fs');
 var showdown = require('showdown'),
     converter = new showdown.Converter();
@@ -22,6 +23,7 @@ function run() {
         const htmlWitStyle = appendUlStyle(html);
 
         fs.writeFileSync(`${fileName}.html`, htmlWitStyle, 'utf8');
+        copyBoard(htmlWitStyle);
         console.log(`${fileName}.html이 생성되었습니다.`);
     } catch (err) {
         console.log(err);
@@ -31,10 +33,15 @@ function run() {
 function appendUlStyle(html) {
     let appendStyle = html;
     TISTORY_STYLE.forEach(item => {
-        appendStyle = html.replace(item.tag, item.style)
+        appendStyle = appendStyle.replace(item.tag, item.style)
     });
     return appendStyle;
 }
 
+function copyBoard(html) {
+    const copyProc = proc.spawn('pbcopy');
+    copyProc.stdin.write(html);
+    copyProc.stdin.end();
+}
 
 run();
