@@ -7,6 +7,10 @@ const TISTORY_STYLE = [
     {
         'tag': /<ul>/gi,
         'style': `<ul style="list-style-type: disc;">`
+    },
+    {
+        'tag': /<ol>/gi,
+        'style': `<ol style="list-style-type: decimal;" data-ke-list-type="decimal">`
     }
 ];
 
