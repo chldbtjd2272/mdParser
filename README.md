@@ -2,6 +2,7 @@
 git readme파일 html로 파싱해준다
 
 사용법
+
 1.git clone 
 
 2. vim ~/.bashrc 혹은 zshrc
