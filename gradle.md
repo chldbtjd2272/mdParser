@@ -1,15 +1,13 @@
  java 프로젝트의 build gradle 파헤치
 ======================
 
->인텔리제이가 만들어 주는 build.gradle로 항상 편리하게 java와 spring을 빌드해왔다.  
->이 글은 intellJ가 항상 자동으로 만들어 주는 그래들 프로젝트를 분석해 본 내용이다.
+>인텔리제이가 만들어 주는 build.gradle로 편리하게 java와 spring을 빌드해왔다.  
+>이 글은 intellJ가 자동으로 만들어 주는 그래들 프로젝트를 분석해 본 내용이다.
 
 
 인텔리제이로 그래들 자바프로젝트를 만들면 아래와 같은 패키지 구조를 가진다.
 ![default-directory](./image/default-directory.png)
 
-
-여기서 몇개 살펴보자.
 
 *settings.gradle*
 <pre><code>
@@ -39,25 +37,25 @@
    }
    </code></pre>
    
-settings.gradle에 루트 프로젝트의 이름이 설정되어있다.  
-빌드 그래들의 설정들은 이 *루트 프로젝트의 스코프*를 가지고 있는 설정들이다.
+settings.gradle에 루트 프로젝트의 이름이 설정되어 있다.  
+build.gradle의 설정들은 이 **루트 프로젝트의 스코프**를 가지고 있는 설정들이다.
 
 >settings.gradle에 서브 프로젝트를 추가하고,   
->빌드 그래들에 각각에 맞는 스코프를 만들어 의존성을 주입하면 멀티 프로젝트를 구성할 수 있다.  
->해당 프로젝트는 멀티 모듈 프로젝트가 아니므로 전체 스코프로 설정들이 되어있다.    
+>build.gradle에 각각에 맞는 스코프를 만들어 의존성을 주입하면 멀티 프로젝트를 구성할 수 있다.  
+>해당 프로젝트는 멀티 모듈 프로젝트가 아니므로 전체 스코프로 설정되어 있다.    
 
 
  SourceSet
  -----------
- 자바 플러그인에는 *SourceSet이라는 개념*이 포함된다.   
- *그래들*을 이용해 *자바 프로젝트*를 생성하면 아래와 같이 SourceSet을 구성해준다.
+ 자바 플러그인에는 **SourceSet이라는 개념**이 포함된다.   
+ **그래들**을 이용해 *자바 프로젝트*를 생성하면 아래와 같이 SourceSet을 구성해준다.
 ![sourceSet](./image/sourceSet.png)
 
 
  - main : 실제 작동 소스코드로 컴파일해서 JAR 파일로 만들어지는 코드이다. 
  - test : 단위 테스트 소스코드 컴파일해서 Junit으로 실행한다.
 
- 인텔리제이 gradle을 이용해서 자바 프로젝트를 만들때와 java프로젝트를 만들때 구성 달랐던 이유이다.
+ 인텔리제이에서 그래들 기반이 아닌 기본 자바프로젝트를 만들면 위의 sourceSet구성과 다르다.
   
  
  plugins
@@ -65,9 +63,8 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
 
         플러그인은 재사용 가능한 빌드 로직을 패키지화하여 task로 제공해 빌드시 사용할 수 있도록 제공한 것이고,
         plugins블록은 사용할 플러그인을 선언하는 블록이다.
-
-  설명만 보면 잘 이해가 안될 것이다.   
-  위의 코드를 전부 주석처리하고 인텔리제이로 gradle에서 수행할 수 있는 task들을 확인해보자.   
+   
+  위의 build.gradle 스크립트를 전부 주석처리하고 인텔리제이의 gradle에서 수행할 수 있는 task들을 확인해보자.   
 
    > ./gradlew build && ./gradlew tasks --all  
    > 위 명령어는 build 후 수행할 수 있는 task를 보여준다.
@@ -76,16 +73,16 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
 
    아무 플러그인이 없는 상태에서 위 명령어를 실행하면 *help와 build setup* 종류의 테스크 밖에 없다.  
    Tasks에 있는 help는 *프로젝트에 대한 정보들을 알려주는 역할*을 한다.  
-   (ex: help 중 하나인 dependencies를 수행하면 현재 디펜던시에 대한 정보가 나온다.)
+   (ex: help 중 하나인 dependencies를 수행하면 프로젝트의 디펜던시에 대한 정보가 나온다.)
  
-   build setup에 태스크 목록은 그래들 프로젝트를 셋업할 수 있는 테스크다.   
+   build setup의 task들은 그래들 프로젝트를 셋업할 수 있는 task다.   
    init을 수행시키면 build.gradle이 생성되고, wapper을 실행하면 gradlew와 gradlew.bat이 생성된다.
    
-   >task들을  편리하게 실행시킬 수 있도록 도와주는 실행파일이다. 
+   >gradlew와 gradlew.bat은 task들을  편리하게 실행시킬 수 있도록 도와주는 실행파일이다. 
    >unix계열에서 실행할 수 있는 gradlew, window계열에서 실행할 수 있는 gradlew.bat 
    
    그렇다면 이 기본 테스크들은 build.gradle을 주석처리해도 왜 인텔리제이 gradle task에 그대로 있는것일까?     
-   그건 gradle프로젝트의 가장 기본 task들이기 때문이다.
+   gradle프로젝트의 가장 기본 task들이기 때문이다.
    gradle을 설치하고 프로젝트를 init시키면 *gradle, gradle, settings.gradle*이 그래들 프로젝트의 가장 기본적인 구성요소로 생성된다.
    위와 같이 구성된 그래들 프로젝트는 *기본 gradle task*를 수행할 수 있다.
    
@@ -102,7 +99,7 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
    </code></pre>
    
    ![java-task](./image/java-task.png)
-   build.gradle에서 plugins만 주석을 풀고 그래들을 실행시키면 *많은 task*들이 추가된걸 볼 수 있다.  
+   build.gradle에서 plugins만 주석을 풀고 그래들을 실행시키면 *많은 task*들이 추가된다.  
    몇가지 테스크들을 살펴보자.
  
    ##1. compileJava 
@@ -163,7 +160,7 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
   
   >https://mvnrepository.com/ 메이븐 중앙 저장소
   
-  근데 가끔보면 *maven{}으로 커스텀한 url*이 설정되어있는 걸 볼 수 있다.  
+  근데 가끔보면 *maven{}으로 커스텀한 url*이 설정되어 있는 걸 볼 수 있다.  
   gradle은 중앙 저장소 뿐 아니라 maven,ivy로 구축된 *사설 저장소*에서도 의존성을 가져올 수 있도록 지원한다.  
   
   <pre><code>
@@ -174,7 +171,7 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
   }
   </code></pre> 
   
-  *maven저장소를* 구축해서 *의존성 파일들*을 넣어놓고 해당 리파지토리에서 다운받을 수 있게할 수 있다.  
+  *maven저장소를* 구축해서 *의존성 파일들*을 넣어놓고 위와 같이 설정한다면 myrepo에서 의존성을 가져올 수 있게 된다.  
   또 maven{} 은 여러개 설정할 수 있다.  
   이와같이 사설 의존성 저장공간을 만든다면 외부망인 maven 저장소에 접근하지 않고 안전한 내부망에서 의존성을 가져올 수 있게 된다.  
   보통 사내에서 많이 구축하여 사용한다.       
@@ -183,7 +180,7 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
   dependencies
   -----------------
   
-  *dependencies{}는 프로젝트*가 작업을 수행하는 데 *필요한 의존성*들을 표시한다.
+  *dependencies{}는 프로젝트*가 작업을 수행하는데 *필요한 의존성*들을 표시한다.
   
   * 이행적 의존성 관리
         <pre><code>
