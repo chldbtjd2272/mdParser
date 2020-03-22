@@ -1,4 +1,4 @@
- build.gradle 파헤치기
+ java 프로젝트의 build gradle 파헤치
 ======================
 
 >인텔리제이가 만들어 주는 build.gradle로 항상 편리하게 java와 spring을 빌드해왔다.  
@@ -105,28 +105,35 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
    build.gradle에서 plugins만 주석을 풀고 그래들을 실행시키면 *많은 task*들이 추가된걸 볼 수 있다.  
    몇가지 테스크들을 살펴보자.
  
-   1. compileJava 
+   ##1. compileJava 
    
        Java 소스 파일을 컴파일한다.   
        인텔리제이에서 java소스에 main만 추가해서 실행시켜보자.
-       ![build-java](./image/build-java.png)
+       
+  ![build-java](./image/build-java.png)
+       
        빌드 디렉토리가 추가되고 안을 살펴보면 컴파일된 class들이 들어있다.   
    
-   2. clean 
+   ##2. clean
+    
         생성된 빌드 디렉토리를 삭제한다.
         
-   3. jar
+   ##3. jar
+   
          main에 있는 소스를 기반으로 jar파일을 만들어 준다.
   
-   4. build
+   ##4. build
+   
         전체 프로젝트를 수행하는 종합작업이다 여러가지 테스크들이 실행된다.
-        ![build](./image/build.png)
+     
+   ![build](./image/build.png)
    
    >더 궁금한 내용은 https://docs.gradle.org/current/userguide/java_plugin.html 참고
   
   
   아래 사진은 tasks들의 상속관계이다.  
   해당 관계를 보면 *build를 수행하면 어떤 하위 task들*이 수행되었는지 알 수 있다.
+  
    ![task](./image/task.png)
    
   > plugins블록으로 설정하는 방법과 apply로 설정하는 방법이 존재한다.   
@@ -217,8 +224,8 @@ settings.gradle에 루트 프로젝트의 이름이 설정되어있다.
       파일의존성을 *일반 jar파일*의 경로를 적어주어 의존성을 추가할 수 있다.  
       해당 방법을 사용하면 jar파일을 maver 중앙저장소나, 사설저장소에 넣지 않고도 의존성 추가가 가능하다.
   
-      >>이것말고도 다양한 의존성 추가방법이 있고 더 궁금한 것이 있다면 아래링크에서 확인하자.
-      >>https://kwonnam.pe.kr/wiki/gradle/dependencies
+      >이것말고도 다양한 의존성 추가방법이 있고 더 궁금한 것이 있다면 아래링크에서 확인하자.
+      >https://kwonnam.pe.kr/wiki/gradle/dependencies
   
   
   * 의존성 api
